@@ -22,11 +22,15 @@ win = pg.GraphicsWindow(title="Draw dump")
 win.resize(1000,600)
 win.setWindowTitle('pyqtgraph app')
 pg.setConfigOptions(antialias=True)
-p = win.addPlot(title="Plot")
-w0 = p.plot(pen='r')
-w1 = p.plot(pen='g')
-w2 = p.plot(pen='b')
-w3 = p.plot(pen='y')
+p0 = win.addPlot(col=0, row=0, title="Plot0")
+p1 = win.addPlot(col=0, row=1, title="Plot1")
+p2 = win.addPlot(col=0, row=2, title="Plot2")
+p3 = win.addPlot(col=0, row=3, title="Plot3")
+
+w0 = p0.plot(pen='r')
+w1 = p1.plot(pen='g')
+w2 = p2.plot(pen='b')
+w3 = p3.plot(pen='y')
 
 state = 0
 data = []
@@ -44,6 +48,9 @@ with open(filename, "rb") as f:
                         h = ord(f.read(1))
                         l = ord(f.read(1))
                         result = 256*h + l
+                        ## make signed
+                        if result > 32767:
+                            result = result - 65536
                         ## sort of filter
                         #if(i != 0 and result < 10000):
                         #    result = 65535
